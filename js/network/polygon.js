@@ -1,25 +1,41 @@
-status: "coming_soon",
+const NETWORK = Object.freeze({
 
-contracts: Object.freeze({
+    chainId: 137,
 
-    token: "",
+    key: "polygon",
 
-    exchange: "",
+    name: "polygon",
 
-    deployer: "",
+    symbol: "POL",
 
-    factory: ""
+    decimals: 18,
 
-}),
+    status: "coming_soon",
 
-abi: Object.freeze({
+    contracts: Object.freeze({
 
-    token: "./abi/polygon/LaunchFutureToken.json",
+        token: "",
 
-    exchange: "./abi/polygon/LaunchFutureExchange.json",
+        exchange: "",
 
-    deployer: "./abi/polygon/LFTDeployer.json",
+        deployer: "",
 
-    factory: "./abi/polygon/LFTFactory.json"
+        factory: ""
 
-})
+    }),
+
+    abi: Object.freeze({
+
+        token: "./abi/polygon/LaunchFutureToken.json",
+
+        exchange: "./abi/polygon/LaunchFutureExchange.json",
+
+        deployer: "./abi/polygon/LFTDeployer.json",
+
+        factory: "./abi/polygon/LFTFactory.json"
+
+    })
+
+});
+
+export default NETWORK;

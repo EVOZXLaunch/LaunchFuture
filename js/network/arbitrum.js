@@ -1,25 +1,41 @@
-status: "coming_soon",
+const NETWORK = Object.freeze({
 
-contracts: Object.freeze({
+    chainId: 42161,
 
-    token: "",
+    key: "arbitrum",
 
-    exchange: "",
+    name: "arbitrum",
 
-    deployer: "",
+    symbol: "ETH",
 
-    factory: ""
+    decimals: 18,
 
-}),
+    status: "coming_soon",
 
-abi: Object.freeze({
+    contracts: Object.freeze({
 
-    token: "./abi/arbitrum/LaunchFutureToken.json",
+        token: "",
 
-    exchange: "./abi/arbitrum/LaunchFutureExchange.json",
+        exchange: "",
 
-    deployer: "./abi/arbitrum/LFTDeployer.json",
+        deployer: "",
 
-    factory: "./abi/arbitrum/LFTFactory.json"
+        factory: ""
 
-})
+    }),
+
+    abi: Object.freeze({
+
+        token: "./abi/arbitrum/LaunchFutureToken.json",
+
+        exchange: "./abi/arbitrum/LaunchFutureExchange.json",
+
+        deployer: "./abi/arbitrum/LFTDeployer.json",
+
+        factory: "./abi/arbitrum/LFTFactory.json"
+
+    })
+
+});
+
+export default NETWORK;

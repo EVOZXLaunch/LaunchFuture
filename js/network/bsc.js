@@ -1,25 +1,41 @@
-status: "coming_soon",
+const NETWORK = Object.freeze({
 
-contracts: Object.freeze({
+    chainId: 56,
 
-    token: "",
+    key: "bsc",
 
-    exchange: "",
+    name: "bsc",
 
-    deployer: "",
+    symbol: "BNB",
 
-    factory: ""
+    decimals: 18,
 
-}),
+    status: "coming_soon",
 
-abi: Object.freeze({
+    contracts: Object.freeze({
 
-    token: "./abi/bsc/LaunchFutureToken.json",
+        token: "",
 
-    exchange: "./abi/bsc/LaunchFutureExchange.json",
+        exchange: "",
 
-    deployer: "./abi/bsc/LFTDeployer.json",
+        deployer: "",
 
-    factory: "./abi/bsc/LFTFactory.json"
+        factory: ""
 
-})
+    }),
+
+    abi: Object.freeze({
+
+        token: "./abi/bsc/LaunchFutureToken.json",
+
+        exchange: "./abi/bsc/LaunchFutureExchange.json",
+
+        deployer: "./abi/bsc/LFTDeployer.json",
+
+        factory: "./abi/bsc/LFTFactory.json"
+
+    })
+
+});
+
+export default NETWORK;

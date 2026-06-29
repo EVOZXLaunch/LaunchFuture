@@ -1,25 +1,41 @@
-status: "coming_soon",
+const NETWORK = Object.freeze({
 
-contracts: Object.freeze({
+    chainId: 1,
 
-    token: "",
+    key: "ethereum",
 
-    exchange: "",
+    name: "Ethereum",
 
-    deployer: "",
+    symbol: "ETH",
 
-    factory: ""
+    decimals: 18,
 
-}),
+    status: "coming_soon",
 
-abi: Object.freeze({
+    contracts: Object.freeze({
 
-    token: "./abi/ethereum/LaunchFutureToken.json",
+        token: "",
 
-    exchange: "./abi/ethereum/LaunchFutureExchange.json",
+        exchange: "",
 
-    deployer: "./abi/ethereum/LFTDeployer.json",
+        deployer: "",
 
-    factory: "./abi/ethereum/LFTFactory.json"
+        factory: ""
 
-})
+    }),
+
+    abi: Object.freeze({
+
+        token: "./abi/ethereum/LaunchFutureToken.json",
+
+        exchange: "./abi/ethereum/LaunchFutureExchange.json",
+
+        deployer: "./abi/ethereum/LFTDeployer.json",
+
+        factory: "./abi/ethereum/LFTFactory.json"
+
+    })
+
+});
+
+export default NETWORK;
