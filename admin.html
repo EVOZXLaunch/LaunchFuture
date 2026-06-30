@@ -3,328 +3,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LaunchFuture Full Admin Dashboard</title>
+    <title>LaunchFuture Dashboard Admin Resmi</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans min-h-screen text-xs sm:text-sm">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen text-xs sm:text-sm">
 
-    <nav class="bg-slate-800 border-b border-slate-700 px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3 sticky top-0 z-50">
+    <nav class="bg-slate-900 border-b border-slate-800 px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-2 sticky top-0 z-50">
         <div>
-            <h1 class="text-base font-bold text-indigo-400 tracking-wider">🚀 LAUNCHFUTURE MASTER ADMIN</h1>
-            <p class="text-[10px] text-slate-400">Android & GitHub Pages Optimized (Ethers v6)</p>
+            <h1 class="text-base font-bold text-indigo-400 tracking-wider">🚀 LAUNCHFUTURE ADMIN PANEL</h1>
+            <p class="text-[10px] text-slate-400">Status Kontrak: Terhubung Langsung via ABI Asli</p>
         </div>
-        <button id="connectBtn" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-all active:scale-95 text-xs">
+        <button id="connectBtn" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-1.5 px-4 rounded-lg transition-all active:scale-95 text-xs">
             Connect Wallet
         </button>
     </nav>
 
     <main class="max-w-6xl mx-auto p-4 space-y-6">
-        
-        <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-                <span class="text-xs font-semibold text-slate-400 uppercase">Connected Admin:</span>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                <span class="text-xs font-semibold text-slate-500 uppercase">Admin Address:</span>
                 <p id="walletAddress" class="text-xs font-mono text-emerald-400 break-all mt-1">Not Connected</p>
             </div>
-            <div>
-                <span class="text-xs font-semibold text-slate-400 uppercase">Default Treasury Target:</span>
-                <p class="text-xs font-mono text-indigo-300 break-all mt-1">0x50Cd30Ff7f0fbBD9d0FDe1F60DE8c52D6F390c5C</p>
+            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                <span class="text-xs font-semibold text-slate-500 uppercase">Target Treasury:</span>
+                <p class="text-xs font-mono text-indigo-400 break-all mt-1">0x50Cd30Ff7f0fbBD9d0FDe1F60DE8c52D6F390c5C</p>
+            </div>
+            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                <span class="text-xs font-semibold text-slate-500 uppercase">Factory Address:</span>
+                <p class="text-xs font-mono text-slate-400 break-all mt-1">0xcd86Ca358283f06581365635372E5bF0D30271D3</p>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-700 pb-2">
-                    <h3 class="font-bold text-indigo-400 flex items-center gap-1">🏭 LFT Factory Control</h3>
-                    <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded text-slate-300">0xcd86...71D3</span>
+            <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h3 class="font-bold text-indigo-400 flex items-center gap-1">🏭 LFTFactory Emergency & Payment</h3>
                 </div>
 
-                <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/60 space-y-2">
-                    <label class="block text-xs font-medium text-slate-300">Emergency State Control</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="factoryPause(true)" class="bg-red-600/80 hover:bg-red-700 text-white py-1.5 px-3 rounded font-medium active:scale-95 transition">Pause Factory</button>
-                        <button onclick="factoryPause(false)" class="bg-emerald-600/80 hover:bg-emerald-700 text-white py-1.5 px-3 rounded font-medium active:scale-95 transition">Unpause Factory</button>
+                <div class="space-y-2">
+                    <label class="block text-xs font-medium text-slate-400">Factory Circuit Breaker (Pause/Unpause)</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="factoryPause()" class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg active:scale-95 transition">
+                            🚫 Pause Factory
+                        </button>
+                        <button onclick="factoryUnpause()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-3 rounded-lg active:scale-95 transition">
+                            ✅ Unpause Factory
+                        </button>
                     </div>
                 </div>
 
-                <div class="space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">Set Factory Treasury & Split Percent</label>
-                        <div class="grid grid-cols-2 gap-2 mb-2">
-                            <input type="number" id="burnPercent" placeholder="Burn % (e.g. 500 = 5%)" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white">
-                            <input type="number" id="treasuryPercent" placeholder="Treasury %" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white">
-                        </div>
-                        <div class="flex gap-2">
-                            <input type="text" id="factoryTreasury" placeholder="New Treasury Address (0x...)" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white w-full font-mono">
-                            <button onclick="updateFactoryConfig()" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1 rounded font-medium whitespace-nowrap">Update Config</button>
-                        </div>
-                    </div>
+                <hr class="border-slate-800 my-2">
 
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">Base Deploy Fee (dalam WEI / Native)</label>
-                        <div class="flex gap-2">
-                            <input type="number" id="baseDeployFee" placeholder="Contoh: 10000000000000000 (0.01 Native)" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white w-full font-mono">
-                            <button onclick="setBaseDeployFee()" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1 rounded font-medium">Set Fee</button>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-900/40 p-3 rounded-lg border border-slate-700 space-y-2">
-                        <label class="block text-xs text-slate-300 font-semibold">Payment Token Management (Allowed Tokens)</label>
-                        <input type="text" id="paymentTokenAddr" placeholder="Token Address (0x...)" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white w-full font-mono">
-                        <div class="grid grid-cols-2 gap-2">
-                            <button onclick="managePayment(true)" class="bg-indigo-600/80 hover:bg-indigo-700 text-white py-1 rounded font-medium">Add Token</button>
-                            <button onclick="managePayment(false)" class="bg-rose-600/80 hover:bg-rose-700 text-white py-1 rounded font-medium">Remove Token</button>
-                        </div>
+                <div class="space-y-2">
+                    <label class="block text-xs font-medium text-slate-400">Payment Methods Management</label>
+                    <input type="text" id="tokenPaymentInput" placeholder="Masukkan Alamat Kontrak Token (0x...)" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs w-full font-mono text-white focus:outline-none focus:border-indigo-500">
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="addPaymentMethod()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-3 rounded-lg active:scale-95 transition">
+                            ➕ Add Payment Method
+                        </button>
+                        <button onclick="removePaymentMethod()" class="bg-rose-600 hover:bg-rose-700 text-white font-medium py-2 px-3 rounded-lg active:scale-95 transition">
+                            ➖ Remove Payment Method
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-700 pb-2">
-                    <h3 class="font-bold text-indigo-400 flex items-center gap-1">📈 LaunchFuture Exchange</h3>
-                    <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded text-slate-300">0x9680...56e</span>
+            <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h3 class="font-bold text-indigo-400 flex items-center gap-1">📈 LaunchFuture Exchange & Fund Recovery</h3>
                 </div>
 
-                <div class="space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">Set LFT Price per Native Asset</label>
-                        <div class="flex gap-2">
-                            <input type="number" id="exchangeRate" placeholder="Jumlah LFT per 1 Native Coin" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white w-full">
-                            <button onclick="setExchangeRate()" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1 rounded font-medium">Update Rate</button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">Set Exchange Treasury Target</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="exchangeTreasury" placeholder="0x..." class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white w-full font-mono">
-                            <button onclick="setExchangeTreasury()" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1 rounded font-medium">Set Treasury</button>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 space-y-2">
-                        <label class="block text-xs font-semibold text-amber-400">Emergency Fund Recovery (Withdrawal)</label>
-                        <div class="flex gap-2">
-                            <button onclick="recoverFunds(true)" class="bg-amber-600 hover:bg-amber-700 text-white py-1 px-3 rounded font-medium w-1/2">Withdraw Native</button>
-                            <div class="w-1/2 flex flex-col gap-1">
-                                <input type="text" id="recoverTokenAddr" placeholder="Token Address" class="bg-slate-900 border border-slate-600 rounded px-2 py-0.5 text-[11px] text-white font-mono">
-                                <button onclick="recoverFunds(false)" class="bg-amber-700 hover:bg-amber-800 text-white py-1 px-2 rounded font-medium text-[11px]">Withdraw Custom ERC20</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-3">
-                <h3 class="font-bold text-rose-400 border-b border-slate-700 pb-2">🔑 Global Ownership Transfer (Hati-hati!)</h3>
-                <input type="text" id="newGlobalOwner" placeholder="New Owner Address (0x...)" class="bg-slate-900 border border-slate-600 rounded px-2 py-1.5 text-xs text-white w-full font-mono">
-                <div class="grid grid-cols-3 gap-2">
-                    <button onclick="transferSystemOwnership('factory')" class="bg-slate-700 hover:bg-rose-900 text-white py-1 rounded text-[11px]">Factory Owner</button>
-                    <button onclick="transferSystemOwnership('exchange')" class="bg-slate-700 hover:bg-rose-900 text-white py-1 rounded text-[11px]">Exchange Owner</button>
-                    <button onclick="transferSystemOwnership('token')" class="bg-slate-700 hover:bg-rose-900 text-white py-1 rounded text-[11px]">Token Owner</button>
-                </div>
-            </div>
-
-            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-3">
-                <h3 class="font-bold text-indigo-400 border-b border-slate-700 pb-2">⚙️ LFT Deployer Link</h3>
-                <span class="text-[10px] text-slate-400 block">SC LFTDeployer: 0x3f81E785628D452A8Aae1536D15A3586B490F0c5</span>
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1">Initialize Factory inside Deployer</label>
+                <div class="space-y-2">
+                    <label class="block text-xs font-medium text-slate-400">Set Exchange Rate (LFT Per Native Asset)</label>
                     <div class="flex gap-2">
-                        <input type="text" id="initFactoryAddr" placeholder="Factory Address" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white w-full font-mono" value="0xcd86Ca358283f06581365635372E5bF0D30271D3">
-                        <button onclick="initFactoryInDeployer()" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1 rounded font-medium whitespace-nowrap">Link Factory</button>
+                        <input type="number" id="newRateInput" placeholder="Contoh: 5000" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs w-full text-white focus:outline-none focus:border-indigo-500">
+                        <button onclick="setLFTPerNative()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg active:scale-95 transition whitespace-nowrap">
+                            🎯 Set Rate
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="border-slate-800 my-2">
+
+                <div class="space-y-2">
+                    <label class="block text-xs font-medium text-amber-500 font-semibold">Emergency Fund Recovery Tools</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <button onclick="recoverNative()" class="bg-amber-600 hover:bg-amber-700 text-slate-950 font-bold py-2 px-3 rounded-lg active:scale-95 transition">
+                            💰 Recover Native
+                        </button>
+                        
+                        <div class="flex flex-col gap-1.5">
+                            <input type="text" id="erc20RecoverInput" placeholder="Token Address (0x...)" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-[11px] font-mono text-white focus:outline-none focus:border-indigo-500">
+                            <button onclick="recoverERC20()" class="bg-slate-800 hover:bg-amber-800 border border-amber-600/40 text-amber-400 font-medium py-1 px-3 rounded-lg text-xs active:scale-95 transition">
+                                🗲 Recover ERC20
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-indigo-400 border-b border-slate-800 pb-2">⚙️ Advanced Parameter Configurations</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-3 bg-slate-950/40 p-3 rounded-lg border border-slate-800">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Set Base Deploy Fee (dalam Wei)</label>
+                        <div class="flex gap-2">
+                            <input type="number" id="baseDeployFeeInput" placeholder="e.g. 10000000000000000" class="bg-slate-950 border border-slate-700 rounded px-3 py-1.5 text-xs text-white w-full">
+                            <button onclick="setBaseDeployFee()" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded text-xs font-medium">Update Fee</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Set Split Percentages (Factory)</label>
+                        <div class="flex gap-2">
+                            <input type="number" id="burnPercentInput" placeholder="Burn % (500=5%)" class="bg-slate-950 border border-slate-700 rounded px-2 py-1 w-1/2 text-white">
+                            <input type="number" id="treasuryPercentInput" placeholder="Treasury %" class="bg-slate-950 border border-slate-700 rounded px-2 py-1 w-1/2 text-white">
+                            <button onclick="setPercentages()" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1 rounded text-xs font-medium">Set %</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 bg-slate-950/40 p-3 rounded-lg border border-slate-800">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Set Factory Treasury Address</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="facTreasuryInput" placeholder="0x..." class="bg-slate-950 border border-slate-700 rounded px-3 py-1.5 text-xs text-white w-full font-mono">
+                            <button onclick="setFactoryTreasury()" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded text-xs font-medium">Update</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Set Exchange Treasury Address</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="excTreasuryInput" placeholder="0x..." class="bg-slate-950 border border-slate-700 rounded px-3 py-1.5 text-xs text-white w-full font-mono">
+                            <button onclick="setExchangeTreasury()" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded text-xs font-medium">Update</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
             <h3 class="text-xs font-semibold text-slate-400 uppercase mb-2">Live Web3 Transaction Logs</h3>
-            <div id="logConsole" class="bg-slate-900 p-3 rounded-lg font-mono text-[11px] h-40 overflow-y-auto space-y-1 text-slate-400 border border-slate-700">
-                [System] Seluruh fungsi manajemen dari 4 ABI berkas Anda telah disuntikkan. Hubungkan wallet untuk mengeksekusi.
+            <div id="logConsole" class="bg-slate-950 p-3 rounded-lg font-mono text-[11px] h-40 overflow-y-auto space-y-1 text-slate-400 border border-slate-800">
+                [System] Seluruh elemen UI disesuaikan sesuai layout screenshot. Hubungkan dompet Anda untuk memulai transaksi asli.
             </div>
         </div>
     </main>
 
     <script>
-        const ADDR = {
-            treasury: "0x50Cd30Ff7f0fbBD9d0FDe1F60DE8c52D6F390c5C",
-            token: "0x62B9559F193d111aF92d9a5604d79024BFB1C847",
-            exchange: "0x9680B43F695d5245062e59CCA92ad92DE5aed56e",
-            deployer: "0x3f81E785628D452A8Aae1536D15A3586B490F0c5",
-            factory: "0xcd86Ca358283f06581365635372E5bF0D30271D3"
+        const CONTRACT_ADDRESSES = {
+            factory: "0xcd86Ca358283f06581365635372E5bF0D30271D3",
+            exchange: "0x9680B43F695d5245062e59CCA92ad92DE5aed56e"
         };
 
-        // Kumpulan ABI Lengkap Berdasarkan Berkas Anda (Fungsi Tulis / Write Admin)
-        const FullABIs = {
-            factory: [
-                "function setTreasury(address _treasury) external",
-                "function setBaseDeployFee(uint256 _fee) external",
-                "function pauseFactory() external",
-                "function unpauseFactory() external",
-                "function addPaymentMethod(address _token) external",
-                "function removePaymentMethod(address _token) external",
-                "function setPercentages(uint16 _burn, uint16 _treasury) external",
-                "function transferOwnership(address newOwner) external"
-            ],
-            exchange: [
-                "function setLFTPerNative(uint256 newRate) external",
-                "function setTreasury(address newTreasury) external",
-                "function withdrawNative() external",
-                "function withdrawToken(address tokenAddress) external",
-                "function transferOwnership(address newOwner) external"
-            ],
-            deployer: [
-                "function setFactory(address _factory) external"
-            ],
-            token: [
-                "function transferOwnership(address newOwner) external"
-            ]
-        };
+        // AMBIL PARSING DARI FILE ASLI YANG ANDA UNGGAH (FUNGSI MUTASI UTAMA)
+        const LFTFactoryABI = [
+            "function addPaymentMethod(address _token) external",
+            "function removePaymentMethod(address _token) external",
+            "function pauseFactory() external",
+            "function unpauseFactory() external",
+            "function setBaseDeployFee(uint256 _fee) external",
+            "function setPercentages(uint16 _burnPercent, uint16 _treasuryPercent) external",
+            "function setTreasury(address _treasury) external"
+        ];
 
-        let provider, signer;
+        const LaunchFutureExchangeABI = [
+            "function setLFTPerNative(uint256 newRate) external",
+            "function setTreasury(address newTreasury) external",
+            "function withdrawNative() external",
+            "function withdrawToken(address tokenAddress) external"
+        ];
 
-        function log(msg, type = 'info') {
-            const el = document.getElementById('logConsole');
-            const cls = type === 'error' ? 'text-red-400' : (type === 'success' ? 'text-emerald-400' : 'text-slate-400');
-            el.innerHTML += `<div class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}</div>`;
-            el.scrollTop = el.scrollHeight;
+        let provider;
+        let signer;
+
+        function log(message, type = 'info') {
+            const consoleEl = document.getElementById('logConsole');
+            const colorClass = type === 'error' ? 'text-red-400' : (type === 'success' ? 'text-emerald-400' : 'text-slate-400');
+            consoleEl.innerHTML += `<div class="${colorClass}">[${new Date().toLocaleTimeString()}] ${message}</div>`;
+            consoleEl.scrollTop = consoleEl.scrollHeight;
         }
 
+        // Connect Wallet Function
         document.getElementById('connectBtn').addEventListener('click', async () => {
             if (window.ethereum) {
                 try {
                     provider = new ethers.BrowserProvider(window.ethereum);
                     await provider.send("eth_requestAccounts", []);
                     signer = await provider.getSigner();
-                    const a = await signer.getAddress();
-                    document.getElementById('walletAddress').innerText = a;
+                    const currentAddr = await signer.getAddress();
+                    
+                    document.getElementById('walletAddress').innerText = currentAddr;
                     document.getElementById('connectBtn').innerText = "Connected Admin";
-                    document.getElementById('connectBtn').className = "w-full sm:w-auto bg-emerald-600 text-white font-medium py-2 px-4 rounded-lg text-xs";
-                    log(`Wallet Terhubung: ${a}`, 'success');
-                } catch (e) { log(`Koneksi gagal: ${e.message}`, 'error'); }
-            } else { log("Gunakan DApp Browser di MetaMask / TrustWallet / Mises Browser!", 'error'); }
+                    document.getElementById('connectBtn').className = "w-full sm:w-auto bg-emerald-600 text-white font-medium py-1.5 px-4 rounded-lg text-xs";
+                    log(`Wallet Terhubung Sukses: ${currentAddr}`, 'success');
+                } catch (err) {
+                    log(`Koneksi Dompet Gagal: ${err.message}`, 'error');
+                }
+            } else {
+                log("Web3 Provider tidak dideteksi. Harap jalankan tautan ini di dalam DApp Browser (MetaMask App / Mises Browser Android)!", 'error');
+            }
         });
 
-        async function getContract(key) {
-            if (!signer) { log("Error: Hubungkan wallet terlebih dahulu!", "error"); return null; }
-            return new ethers.Contract(ADDR[key], FullABIs[key], signer);
+        // HELPER GET CONTRACT
+        function getContractInstance(address, abi) {
+            if (!signer) {
+                log("Error: Silakan klik tombol 'Connect Wallet' terlebih dahulu!", "error");
+                return null;
+            }
+            return new ethers.Contract(address, abi, signer);
         }
 
-        // --- FACTORY ACTIONS ---
-        async function factoryPause(isPause) {
-            const contract = await getContract('factory'); if(!contract) return;
+        // ==================== LFT FACTORY FUNCTIONS ====================
+        
+        async function factoryPause() {
+            const contract = getContractInstance(CONTRACT_ADDRESSES.factory, LFTFactoryABI);
+            if(!contract) return;
             try {
-                log(`Mengirim instruksi ${isPause ? 'Pause' : 'Unpause'} Factory...`);
-                const tx = isPause ? await contract.pauseFactory() : await contract.unpauseFactory();
-                log(`Tx terkirim: ${tx.hash}`); await tx.wait();
-                log(`Factory Status berhasil diubah!`, 'success');
-            } catch(e) { log(`Gagal: ${e.reason || e.message}`, 'error'); }
+                log("Mengeksekusi perintah pauseFactory()...");
+                const tx = await contract.pauseFactory();
+                log(`Transaksi dikirim ke Blockchain: ${tx.hash}`);
+                await tx.wait();
+                log("Pabrik Kontrak (Factory) Berhasil di-PAUSE!", "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
         }
 
-        async function updateFactoryConfig() {
-            const contract = await getContract('factory'); if(!contract) return;
-            const b = document.getElementById('burnPercent').value;
-            const t = document.getElementById('treasuryPercent').value;
-            const addr = document.getElementById('factoryTreasury').value;
+        async function factoryUnpause() {
+            const contract = getContractInstance(CONTRACT_ADDRESSES.factory, LFTFactoryABI);
+            if(!contract) return;
             try {
-                if(b && t) {
-                    log(`Mengubah persentase Split ke Burn: ${b}, Treasury: ${t}...`);
-                    const tx1 = await contract.setPercentages(b, t);
-                    await tx1.wait(); log(`Persentase Berhasil Diperbarui!`, 'success');
-                }
-                if(ethers.isAddress(addr)) {
-                    log(`Mengubah Alamat Treasury Factory ke ${addr}...`);
-                    const tx2 = await contract.setTreasury(addr);
-                    await tx2.wait(); log(`Treasury Factory Berhasil Diperbarui!`, 'success');
-                }
-            } catch(e) { log(`Gagal: ${e.reason || e.message}`, 'error'); }
+                log("Mengeksekusi perintah unpauseFactory()...");
+                const tx = await contract.unpauseFactory();
+                log(`Transaksi dikirim ke Blockchain: ${tx.hash}`);
+                await tx.wait();
+                log("Pabrik Kontrak (Factory) Berhasil di-UNPAUSE!", "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
+        }
+
+        async function addPaymentMethod() {
+            const contract = getContractInstance(CONTRACT_ADDRESSES.factory, LFTFactoryABI);
+            const tokenAddr = document.getElementById('tokenPaymentInput').value.trim();
+            if(!ethers.isAddress(tokenAddr)) return log("Alamat token tidak valid!", "error");
+            try {
+                log(`Mendaftarkan token ${tokenAddr} sebagai metode pembayaran resmi...`);
+                const tx = await contract.addPaymentMethod(tokenAddr);
+                log(`Tx Hash: ${tx.hash}`); await tx.wait();
+                log("Metode Pembayaran Baru Sukses Ditambahkan!", "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
+        }
+
+        async function removePaymentMethod() {
+            const contract = getContractInstance(CONTRACT_ADDRESSES.factory, LFTFactoryABI);
+            const tokenAddr = document.getElementById('tokenPaymentInput').value.trim();
+            if(!ethers.isAddress(tokenAddr)) return log("Alamat token tidak valid!", "error");
+            try {
+                log(`Menghapus token ${tokenAddr} dari daftar pembayaran...`);
+                const tx = await contract.removePaymentMethod(tokenAddr);
+                log(`Tx Hash: ${tx.hash}`); await tx.wait();
+                log("Metode Pembayaran Sukses Dihapus!", "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
         }
 
         async function setBaseDeployFee() {
-            const contract = await getContract('factory'); if(!contract) return;
-            const fee = document.getElementById('baseDeployFee').value;
+            const contract = getContractInstance(CONTRACT_ADDRESSES.factory, LFTFactoryABI);
+            const fee = document.getElementById('baseDeployFeeInput').value;
+            if(!fee) return log("Input nominal fee wajib diisi!", "error");
             try {
-                log(`Mengubah Base Deploy Fee ke ${fee} wei...`);
+                log(`Memperbarui Base Deploy Fee menjadi ${fee} Wei...`);
                 const tx = await contract.setBaseDeployFee(fee);
-                await tx.wait(); log(`Deploy Fee berhasil diperbarui!`, 'success');
-            } catch(e) { log(`Gagal: ${e.reason || e.message}`, 'error'); }
+                log(`Tx dikirim: ${tx.hash}`); await tx.wait();
+                log("Base Deploy Fee Berhasil Diperbarui!", "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
         }
 
-        async function managePayment(isAdd) {
-            const contract = await getContract('factory'); if(!contract) return;
-            const token = document.getElementById('paymentTokenAddr').value;
-            if(!ethers.isAddress(token)) return log("Alamat token tidak valid", "error");
+        async function setPercentages() {
+            const contract = getContractInstance(CONTRACT_ADDRESSES.factory, LFTFactoryABI);
+            const burn = document.getElementById('burnPercentInput').value;
+            const treasury = document.getElementById('treasuryPercentInput').value;
+            if(!burn || !treasury) return log("Kedua persentase wajib diisi!", "error");
             try {
-                log(`${isAdd ? 'Menambahkan' : 'Menghapus'} metode pembayaran token ${token}...`);
-                const tx = isAdd ? await contract.addPaymentMethod(token) : await contract.removePaymentMethod(token);
-                await tx.wait(); log(`Daftar Token Berhasil Diperbarui!`, 'success');
-            } catch(e) { log(`Gagal: ${e.reason || e.message}`, 'error'); }
+                log(`Mengubah parameter setPercentages(Burn: ${burn}, Treasury: ${treasury})...`);
+                const tx = await contract.setPercentages(burn, treasury);
+                log(`Tx: ${tx.hash}`); await tx.wait();
+                log("Persentase Distribusi Biaya Berhasil Diubah!", "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
         }
 
-        // --- EXCHANGE ACTIONS ---
-        async function setExchangeRate() {
-            const contract = await getContract('exchange'); if(!contract) return;
-            const rate = document.getElementById('exchangeRate').value;
+        async function setFactoryTreasury() {
+            const contract = getContractInstance(CONTRACT_ADDRESSES.factory, LFTFactoryABI);
+            const addr = document.getElementById('facTreasuryInput').value.trim();
+            if(!ethers.isAddress(addr)) return log("Alamat target treasury salah!", "error");
             try {
-                log(`Mengubah LFT rate ke ${rate}...`);
+                log(`Mengubah dompet kas Treasury Factory ke ${addr}...`);
+                const tx = await contract.setTreasury(addr);
+                log(`Tx Hash: ${tx.hash}`); await tx.wait();
+                log("Treasury Factory Berhasil Diperbarui!", "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
+        }
+
+        // ==================== LAUNCHFUTURE EXCHANGE FUNCTIONS ====================
+
+        async function setLFTPerNative() {
+            const contract = getContractInstance(CONTRACT_ADDRESSES.exchange, LaunchFutureExchangeABI);
+            const rate = document.getElementById('newRateInput').value;
+            if(!rate) return log("Harap isi nilai rate baru!", "error");
+            try {
+                log(`Mengubah nilai tukar LFT per Native Coin menjadi: ${rate}`);
                 const tx = await contract.setLFTPerNative(rate);
-                await tx.wait(); log(`Rate Exchange berhasil diubah!`, 'success');
-            } catch(e) { log(`Gagal: ${e.reason || e.message}`, 'error'); }
+                log(`Tx Hash dikirim: ${tx.hash}`); await tx.wait();
+                log(`Sukses! Rate saat ini telah diperbarui ke ${rate}`, "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
         }
 
         async function setExchangeTreasury() {
-            const contract = await getContract('exchange'); if(!contract) return;
-            const t = document.getElementById('exchangeTreasury').value;
-            if(!ethers.isAddress(t)) return log("Alamat tidak valid", "error");
+            const contract = getContractInstance(CONTRACT_ADDRESSES.exchange, LaunchFutureExchangeABI);
+            const addr = document.getElementById('excTreasuryInput').value.trim();
+            if(!ethers.isAddress(addr)) return log("Alamat target salah!", "error");
             try {
-                log(`Mengubah Treasury Exchange ke ${t}...`);
-                const tx = await contract.setTreasury(t);
-                await tx.wait(); log(`Treasury Exchange berhasil diubah!`, 'success');
-            } catch(e) { log(`Gagal: ${e.reason || e.message}`, 'error'); }
+                log(`Mengubah dompet kas Treasury Exchange ke ${addr}...`);
+                const tx = await contract.setTreasury(addr);
+                log(`Tx: ${tx.hash}`); await tx.wait();
+                log("Treasury Exchange Berhasil Diperbarui!", "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
         }
 
-        async function recoverFunds(isNative) {
-            const contract = await getContract('exchange'); if(!contract) return;
+        async function recoverNative() {
+            const contract = getContractInstance(CONTRACT_ADDRESSES.exchange, LaunchFutureExchangeABI);
+            if(!contract) return;
             try {
-                if(isNative) {
-                    log("Menarik saldo Native Coin ke dompet Admin...");
-                    const tx = await contract.withdrawNative();
-                    await tx.wait(); log("Dana Native berhasil ditarik!", "success");
-                } else {
-                    const token = document.getElementById('recoverTokenAddr').value;
-                    if(!ethers.isAddress(token)) return log("Masukkan alamat ERC20 target", "error");
-                    log(`Menarik token darurat (${token})...`);
-                    const tx = await contract.withdrawToken(token);
-                    await tx.wait(); log("Token Berhasil diamankan ke Admin Wallet!", "success");
-                }
-            } catch(e) { log(`Gagal: ${e.reason || e.message}`, 'error'); }
+                log("Memicu fungsi withdrawNative() untuk memindahkan seluruh saldo koin utama...");
+                const tx = await contract.withdrawNative();
+                log(`Tx Terkirim: ${tx.hash}`); await tx.wait();
+                log("Seluruh dana Koin Native berhasil diamankan ke Admin!", "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
         }
 
-        // --- GLOBAL SETTINGS ---
-        async function transferSystemOwnership(key) {
-            const contract = await getContract(key); if(!contract) return;
-            const newOwner = document.getElementById('newGlobalOwner').value;
-            if(!ethers.isAddress(newOwner)) return log("Alamat Owner baru tidak valid!", "error");
+        async function recoverERC20() {
+            const contract = getContractInstance(CONTRACT_ADDRESSES.exchange, LaunchFutureExchangeABI);
+            const tokenAddr = document.getElementById('erc20RecoverInput').value.trim();
+            if(!ethers.isAddress(tokenAddr)) return log("Alamat token ERC20 tidak valid!", "error");
             try {
-                log(`Mentransfer Hak Akses (Ownership) Kontrak [${key.toUpperCase()}] ke ${newOwner}...`);
-                const tx = await contract.transferOwnership(newOwner);
-                await tx.wait(); log(`Ownership ${key} berhasil dipindah!`, 'success');
-            } catch(e) { log(`Gagal: ${e.reason || e.message}`, 'error'); }
-        }
-
-        async function initFactoryInDeployer() {
-            const contract = await getContract('deployer'); if(!contract) return;
-            const fac = document.getElementById('initFactoryAddr').value;
-            try {
-                log(`Menghubungkan Factory ke dalam Deployer...`);
-                const tx = await contract.setFactory(fac);
-                await tx.wait(); log(`Deployer & Factory sukses ditautkan!`, 'success');
-            } catch(e) { log(`Gagal: ${e.reason || e.message}`, 'error'); }
+                log(`Memicu penarikan darurat token (${tokenAddr}) via withdrawToken()...`);
+                const tx = await contract.withdrawToken(tokenAddr);
+                log(`Tx Terkirim: ${tx.hash}`); await tx.wait();
+                log("Token ERC20 berhasil dikuras & diselamatkan ke dompet Admin!", "success");
+            } catch(e) { log(`Gagal: ${e.reason || e.message}`, "error"); }
         }
     </script>
 </body>
