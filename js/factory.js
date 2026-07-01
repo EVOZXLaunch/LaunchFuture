@@ -27,10 +27,12 @@ import {
 
 let factory = null;
 
+let factoryReadOnly = null;
+
 let factoryABI = null;
 
 // =====================================================
-// Factory Contract
+// Factory Contract (signer-bound — required for txs)
 // =====================================================
 
 export async function getFactory() {
@@ -63,12 +65,52 @@ export async function getFactory() {
 }
 
 // =====================================================
+// Factory Contract (read-only — no signer/wallet needed)
+// Used for view calls (fees, payment methods, stats, etc)
+// so they work even before a wallet is connected.
+// =====================================================
+
+export async function getFactoryReadOnly() {
+
+    if (factoryReadOnly) {
+
+        return factoryReadOnly;
+
+    }
+
+    const network =
+        getCurrentNetwork();
+
+    factoryABI =
+        factoryABI ??
+        await loadABI(
+            "LFTFactory"
+        );
+
+    factoryReadOnly =
+    await getContract(
+
+        network.contracts.factory,
+
+        factoryABI,
+
+        true
+
+    );
+
+    return factoryReadOnly;
+
+}
+
+// =====================================================
 // Reset
 // =====================================================
 
 export function clearFactory() {
 
     factory = null;
+
+    factoryReadOnly = null;
 
     factoryABI = null;
 
@@ -83,7 +125,7 @@ export async function symbolExists(
 ) {
 
     const contract =
-        await getFactory();
+        await getFactoryReadOnly();
 
     return await contract
         .symbolExists(
@@ -97,7 +139,7 @@ export async function isSymbolAvailable(
 ) {
 
     const contract =
-        await getFactory();
+        await getFactoryReadOnly();
 
     return await contract
         .isSymbolAvailable(
@@ -115,7 +157,7 @@ export async function getPaymentMethod(
 ) {
 
     const contract =
-        await getFactory();
+        await getFactoryReadOnly();
 
     return await contract
         .getPaymentMethod(
@@ -129,7 +171,7 @@ export async function getDeployFee(
 ) {
 
     const contract =
-        await getFactory();
+        await getFactoryReadOnly();
 
     return await contract
         .getDeployFee(
@@ -143,7 +185,7 @@ export async function quoteNativeFee(
 ) {
 
     const contract =
-        await getFactory();
+        await getFactoryReadOnly();
 
     return await contract
         .quoteNativeFee(
@@ -159,7 +201,7 @@ export async function quoteNativeFee(
 export async function getStatistics() {
 
     const contract =
-        await getFactory();
+        await getFactoryReadOnly();
 
     return await contract
         .getStatistics();
@@ -169,7 +211,7 @@ export async function getStatistics() {
 export async function getFactoryTokenCount() {
 
     const contract =
-        await getFactory();
+        await getFactoryReadOnly();
 
     return await contract
         .getFactoryTokenCount();
@@ -187,7 +229,7 @@ export async function predictTokenAddress(
 ) {
 
     const contract =
-        await getFactory();
+        await getFactoryReadOnly();
 
     return await contract
         .predictTokenAddress(
@@ -346,6 +388,8 @@ export async function deployCreate2(
 export default {
 
     getFactory,
+
+    getFactoryReadOnly,
 
     clearFactory,
 

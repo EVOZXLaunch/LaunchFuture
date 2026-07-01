@@ -44,22 +44,6 @@ const TIME_OPTIONS = Object.freeze({
     minute:
         "2-digit",
 
-    second:
-        "2-digit",
-
-    hour12:
-        false
-
-});
-
-const CLOCK_OPTIONS = Object.freeze({
-
-    hour:
-        "2-digit",
-
-    minute:
-        "2-digit",
-
     hour12:
         false
 
@@ -193,12 +177,7 @@ export function updateClock() {
 
     const now = getNow();
 
-    clockElement.textContent =
-
-        now.toLocaleTimeString(
-            undefined,
-            CLOCK_OPTIONS
-        );
+    clockElement.textContent = formatTime(now);
 
 }
 

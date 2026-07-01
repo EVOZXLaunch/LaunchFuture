@@ -8,7 +8,7 @@ import {
     
     getProvider,
 
-    getSigner,
+    getSigner as blockchainGetSigner,
 
     clearSession,
 
@@ -591,7 +591,13 @@ export async function getWalletProvider() {
 
 export async function getWalletSigner() {
 
-    return await getSigner();
+    return await blockchainGetSigner();
+
+}
+
+export async function getSigner() {
+
+    return await blockchainGetSigner();
 
 }
 
@@ -625,6 +631,8 @@ export default {
 
     getWalletProvider,
 
-    getWalletSigner
+    getWalletSigner,
+
+    getSigner
 
 };

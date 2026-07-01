@@ -21,7 +21,7 @@ import {
 
     MaxUint256
 
-} from "https://esm.sh/ethers@6";
+} from "ethers";
 
 import {
     RPC,

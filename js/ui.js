@@ -1155,91 +1155,22 @@ export function appendConsole(
 }
 
 // =====================================================
-// Toast Notifications
-// =====================================================
-
-export function showToast(title, message = "", type = "info") {
-
-    if (!ui.toastContainer || !ui.toastTemplate) {
-        return;
-    }
-
-    const node = ui.toastTemplate.content.cloneNode(true);
-    const toast = node.querySelector(".toast");
-    const icon = node.querySelector(".toastIcon i");
-    const heading = node.querySelector("h4");
-    const body = node.querySelector("p");
-
-    if (toast) {
-        toast.classList.add(type);
-    }
-
-    const icons = {
-        info: "info",
-        success: "check-circle",
-        error: "alert-circle",
-        warning: "alert-triangle"
-    };
-
-    if (icon) {
-        icon.setAttribute("data-lucide", icons[type] || "info");
-    }
-
-    if (heading) {
-        heading.textContent = title;
-    }
-
-    if (body) {
-        body.textContent = message;
-    }
-
-    ui.toastContainer.appendChild(node);
-
-    if (window.lucide) {
-        lucide.createIcons();
-    }
-
-    const toastEl = ui.toastContainer.lastElementChild;
-
-    setTimeout(() => {
-        toastEl?.classList.add("hide");
-        setTimeout(() => toastEl?.remove(), 300);
-    }, 4500);
-}
-
-// =====================================================
-// Loading Overlay
-// =====================================================
-
-export function showLoading(text = "Loading...") {
-
-    if (ui.loadingText) {
-        ui.loadingText.textContent = text;
-    }
-
-    if (ui.loadingOverlay) {
-        ui.loadingOverlay.hidden = false;
-    }
-}
-
-export function hideLoading() {
-
-    if (ui.loadingOverlay) {
-        ui.loadingOverlay.hidden = true;
-    }
-}
-
-// =====================================================
 // Modal
 // =====================================================
 
-let modalConfirmHandler = null;
+export function openModal({
 
-export function openModal({ title = "LaunchFuture", bodyHTML = "", confirmLabel = "Confirm", cancelLabel = "Cancel", onConfirm = null, hideFooter = false } = {}) {
+    title = "LaunchFuture",
 
-    if (!ui.modal) {
-        return;
-    }
+    bodyHTML = "",
+
+    showFooter = false,
+
+    confirmText = "Confirm",
+
+    onConfirm = null
+
+} = {}) {
 
     if (ui.modalTitle) {
         ui.modalTitle.textContent = title;
@@ -1249,19 +1180,27 @@ export function openModal({ title = "LaunchFuture", bodyHTML = "", confirmLabel 
         ui.modalBody.innerHTML = bodyHTML;
     }
 
+    if (ui.modalFooter === undefined) {
+        ui.modalFooter = $("modalFooter");
+    }
+
+    if (ui.modalFooter) {
+        ui.modalFooter.hidden = !showFooter;
+    }
+
     if (ui.modalConfirm) {
-        ui.modalConfirm.textContent = confirmLabel;
-        ui.modalConfirm.hidden = hideFooter;
+        ui.modalConfirm.textContent = confirmText;
+        ui.modalConfirm.onclick = () => {
+            if (typeof onConfirm === "function") onConfirm();
+            closeModal();
+        };
     }
 
-    if (ui.modalCancel) {
-        ui.modalCancel.textContent = cancelLabel;
-        ui.modalCancel.hidden = hideFooter;
+    if (ui.modal) {
+        ui.modal.hidden = false;
+        document.body.classList.add("modalOpen");
     }
 
-    modalConfirmHandler = onConfirm;
-
-    ui.modal.hidden = false;
     state.modalOpen = true;
 
     if (window.lucide) {
@@ -1271,13 +1210,12 @@ export function openModal({ title = "LaunchFuture", bodyHTML = "", confirmLabel 
 
 export function closeModal() {
 
-    if (!ui.modal) {
-        return;
+    if (ui.modal) {
+        ui.modal.hidden = true;
+        document.body.classList.remove("modalOpen");
     }
 
-    ui.modal.hidden = true;
     state.modalOpen = false;
-    modalConfirmHandler = null;
 }
 
 export function bindModal() {
@@ -1285,50 +1223,122 @@ export function bindModal() {
     ui.modalClose?.addEventListener("click", closeModal);
     ui.modalCancel?.addEventListener("click", closeModal);
 
-    ui.modal?.querySelector("#modalBackdrop")
-        ?.addEventListener("click", closeModal);
+    const backdrop = $("modalBackdrop");
+    backdrop?.addEventListener("click", closeModal);
 
-    ui.modalConfirm?.addEventListener("click", () => {
-        if (typeof modalConfirmHandler === "function") {
-            modalConfirmHandler();
-        }
-        closeModal();
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && state.modalOpen) closeModal();
     });
 }
 
 // =====================================================
-// Theme
+// Toast
+// =====================================================
+
+export function showToast({
+
+    title = "",
+
+    message = "",
+
+    variant = "info"
+
+} = {}) {
+
+    if (!ui.toastContainer || !ui.toastTemplate) {
+
+        console.warn(message || title);
+        return;
+    }
+
+    const node = ui.toastTemplate.content.cloneNode(true);
+    const toast = node.querySelector(".toast");
+
+    if (toast) {
+        toast.classList.add(`toast--${variant}`);
+    }
+
+    const titleEl = node.querySelector(".toastContent h4");
+    const msgEl = node.querySelector(".toastContent p");
+
+    if (titleEl) titleEl.textContent = title;
+    if (msgEl) msgEl.textContent = message;
+
+    const closeBtn = node.querySelector("[data-toast-close]");
+    const el = ui.toastContainer.appendChild(node);
+    const inserted = ui.toastContainer.lastElementChild;
+
+    const remove = () => inserted?.remove();
+
+    closeBtn?.addEventListener("click", remove);
+
+    setTimeout(remove, 5000);
+}
+
+// =====================================================
+// Theme (Dark / Light)
 // =====================================================
 
 const THEME_KEY = "launchfuture.theme";
 
-export function applyTheme(theme) {
+export function getTheme() {
 
-    document.body.classList.toggle("lightTheme", theme === "light");
+    return document.documentElement.getAttribute("data-theme") === "light"
+        ? "light"
+        : "dark";
+}
 
-    const icon = document.querySelector("#themeButton i");
+function applyThemeIcon(theme) {
 
-    if (icon) {
-        icon.setAttribute("data-lucide", theme === "light" ? "sun" : "moon");
-        if (window.lucide) {
-            lucide.createIcons();
-        }
+    const btn = $("themeButton");
+
+    if (!btn) return;
+
+    // Rebuild the icon element each time — lucide replaces <i data-lucide>
+    // with an inline <svg>, so on repeat toggles there's no <i> left to
+    // just update the attribute on.
+    btn.innerHTML = `<i data-lucide="${theme === "light" ? "sun" : "moon"}"></i>`;
+
+    if (window.lucide) {
+        lucide.createIcons();
     }
 }
 
-export function initTheme() {
+export function setTheme(theme) {
 
-    const saved = localStorage.getItem(THEME_KEY) || "dark";
-    applyTheme(saved);
+    const resolved = theme === "light" ? "light" : "dark";
+
+    document.documentElement.setAttribute("data-theme", resolved);
+    localStorage.setItem(THEME_KEY, resolved);
+
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+        meta.setAttribute(
+            "content",
+            resolved === "light" ? "#f3f4f7" : "#050505"
+        );
+    }
+
+    applyThemeIcon(resolved);
 }
 
 export function toggleTheme() {
 
-    const isLight = document.body.classList.contains("lightTheme");
-    const next = isLight ? "dark" : "light";
+    setTheme(getTheme() === "light" ? "dark" : "light");
+}
 
-    applyTheme(next);
-    localStorage.setItem(THEME_KEY, next);
+export function initTheme() {
 
-    return next;
+    const saved = localStorage.getItem(THEME_KEY);
+
+    if (saved === "light" || saved === "dark") {
+        setTheme(saved);
+        return;
+    }
+
+    const prefersLight =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: light)").matches;
+
+    setTheme(prefersLight ? "light" : "dark");
 }
