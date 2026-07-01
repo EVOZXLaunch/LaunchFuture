@@ -1,14 +1,12 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // ABI Loader
 // =====================================================
 
-import {
-    
-    getCurrentNetwork
-
-} from "../networks/index.js";
-
+const { getCurrentNetwork } = LF.networks;
 // =====================================================
 // Cache
 // =====================================================
@@ -20,7 +18,7 @@ const cache =
 // Load ABI
 // =====================================================
 
-export async function loadABI(
+async function loadABI(
     contractName
 ) {
 
@@ -85,13 +83,13 @@ export async function loadABI(
 // Cache
 // =====================================================
 
-export function clearABICache() {
+function clearABICache() {
 
     cache.clear();
 
 }
 
-export function hasABI(
+function hasABI(
     contractName
 ) {
 
@@ -105,3 +103,11 @@ export function hasABI(
     );
 
 }
+
+LF.abiLoader = {
+    loadABI,
+    clearABICache,
+    hasABI
+};
+
+})(window.LF, window.ethers);
