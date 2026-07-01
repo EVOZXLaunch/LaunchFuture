@@ -2,43 +2,44 @@
 
 Decentralized multi-chain token launch platform (currently live on EVOZ Mainnet).
 
-## Development
+## Deploying
 
-Open `index.html` directly, or serve the folder with any static server. Note:
-the production `<script src="./dist/launchfuture.bundle.js">` tag in
-`index.html` requires a build first (see below). If you want to iterate
-without building every time, temporarily swap that tag for
-`<script type="module" src="./js/index.js"></script>` — but remember this
-does NOT work inside wallet in-app browsers and must be reverted before
-shipping.
+No build step, no npm, no CLI needed. Just upload/push every file in this
+folder to your GitHub repository exactly as-is, then enable GitHub Pages:
 
-## Production Build
+**Settings → Pages → Source → Deploy from a branch → `main` / `(root)`**
 
-Wallet in-app browsers (MetaMask Mobile, TokenPocket, imToken, OKX, Bitget,
-Rabby, etc.) run WebViews that frequently fail to load
-`<script type="module">` and cannot reliably fetch remote ES-module imports
-(e.g. the previous `https://esm.sh/ethers@6` import). To fix this, the app
-is bundled into a single classic script with esbuild:
+That's it — `index.html` loads everything it needs directly.
 
-```bash
-npm install
-npm run build     # -> dist/launchfuture.bundle.js
-```
+## Why the scripts changed
 
-`index.html` already points at `dist/launchfuture.bundle.js`. Just make sure
-you run the build before deploying, or let CI do it for you (see below).
+The app used to load `js/index.js` as an ES module
+(`<script type="module">`) and pulled the `ethers` library from a remote
+ES-module CDN. That combination frequently fails inside wallet in-app
+browsers (MetaMask Mobile, TokenPocket, imToken, OKX, Bitget, Rabby, etc.),
+because those WebViews are inconsistent about loading `type="module"`
+scripts and nested ES-module imports.
 
-## Deployment (GitHub Pages)
+To fix this, every file in `js/` is now a **plain classic script** (no
+`type="module"`) that attaches its functions to a shared `window.LF`
+object instead of using `import`/`export`. `ethers` is loaded the same
+way, from its official UMD build, as a global `ethers` object. Classic
+scripts work in every browser and every wallet WebView with zero build
+tooling.
 
-`.github/workflows/deploy.yml` builds the bundle and deploys automatically
-on every push to `main`. Enable it once in your repo:
-**Settings → Pages → Source → GitHub Actions**.
+**Important:** the `<script>` tags near the bottom of `index.html` must
+stay in their current order — each file depends on globals set by the
+ones before it. Don't reorder them, and don't add `type="module"` back.
 
-`dist/` is intentionally excluded from git (see `.gitignore`) — it is
-always generated fresh by the build step, both locally and in CI.
+## Testing before you launch
 
-## Testing on wallet in-app browsers
+Always test the live GitHub Pages URL directly inside a few wallet
+in-app browsers (MetaMask Mobile's built-in browser, TokenPocket, etc.),
+not just a desktop browser, before announcing a token launch.
 
-After deploying, test the live URL directly inside MetaMask Mobile's
-built-in browser, TokenPocket, and at least one other wallet before
-announcing a launch. Desktop-browser testing alone is not sufficient.
+## Note on unused files
+
+`js/utils.js` and `js/review.js` exist in the repo but are not loaded by
+`index.html` — nothing in the app currently uses them. They're left as
+plain ES modules in case you want to wire them in later; if you do,
+they'll need the same classic-script treatment described above.
