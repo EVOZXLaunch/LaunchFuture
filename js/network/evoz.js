@@ -102,7 +102,14 @@ const NETWORK = Object.freeze({
         factory:
             "./abi/evoz/LFTFactory.json"
 
-    })
+    }),
+
+    // -------------------------------------------------
+    // Payment Symbols (shown as fee options on deploy)
+    // Add more as you register them in the factory
+    // -------------------------------------------------
+
+    paymentSymbols: ["EVOZ", "LFT"]
 
 });
 
