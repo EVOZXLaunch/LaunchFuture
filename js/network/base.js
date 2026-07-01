@@ -1,3 +1,6 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 const NETWORK = Object.freeze({
 
     chainId: 8453,
@@ -38,4 +41,6 @@ const NETWORK = Object.freeze({
 
 });
 
-export default NETWORK;
+LF.net_base = NETWORK;
+
+})(window.LF, window.ethers);

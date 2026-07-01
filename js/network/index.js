@@ -1,3 +1,6 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // Storage
 // =====================================================
@@ -10,13 +13,12 @@ const STORAGE_KEY =
 // Network Manager
 // =====================================================
 
-import EVOZ from "./evoz.js";
-import ETHEREUM from "./ethereum.js";
-import BSC from "./bsc.js";
-import POLYGON from "./polygon.js";
-import ARBITRUM from "./arbitrum.js";
-import BASE from "./base.js";
-
+const EVOZ = LF.net_evoz;
+const ETHEREUM = LF.net_ethereum;
+const BSC = LF.net_bsc;
+const POLYGON = LF.net_polygon;
+const ARBITRUM = LF.net_arbitrum;
+const BASE = LF.net_base;
 // =====================================================
 // Networks
 // =====================================================
@@ -66,19 +68,19 @@ if (
 // Get
 // =====================================================
 
-export function getCurrentNetwork() {
+function getCurrentNetwork() {
 
     return currentNetwork;
 
 }
 
-export function getNetwork(key) {
+function getNetwork(key) {
 
     return NETWORKS[key] ?? null;
 
 }
 
-export function getSupportedNetworks() {
+function getSupportedNetworks() {
 
     return Object.values(
         NETWORKS
@@ -90,7 +92,7 @@ export function getSupportedNetworks() {
 // Set
 // =====================================================
 
-export function setCurrentNetwork(
+function setCurrentNetwork(
     key
 ) {
 
@@ -126,7 +128,7 @@ export function setCurrentNetwork(
 // Chain ID
 // =====================================================
 
-export function getNetworkByChainId(
+function getNetworkByChainId(
     chainId
 ) {
 
@@ -158,4 +160,12 @@ export function getNetworkByChainId(
 // Export
 // =====================================================
 
-export default NETWORKS;
+LF.networks = {
+    getCurrentNetwork,
+    getNetwork,
+    getSupportedNetworks,
+    setCurrentNetwork,
+    getNetworkByChainId
+};
+
+})(window.LF, window.ethers);

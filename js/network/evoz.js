@@ -1,3 +1,6 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // EVOZ Mainnet Network Configuration
@@ -117,55 +120,55 @@ const NETWORK = Object.freeze({
 // Helpers
 // =====================================================
 
-export function getChainId() {
+function getChainId() {
 
     return NETWORK.chainId;
 
 }
 
-export function getRpcUrl() {
+function getRpcUrl() {
 
     return NETWORK.rpc[0];
 
 }
 
-export function getExplorerUrl() {
+function getExplorerUrl() {
 
     return NETWORK.explorer.url;
 
 }
 
-export function getFactoryAddress() {
+function getFactoryAddress() {
 
     return NETWORK.contracts.factory;
 
 }
 
-export function getDeployerAddress() {
+function getDeployerAddress() {
 
     return NETWORK.contracts.deployer;
 
 }
 
-export function getExchangeAddress() {
+function getExchangeAddress() {
 
     return NETWORK.contracts.exchange;
 
 }
 
-export function getTokenAddress() {
+function getTokenAddress() {
 
     return NETWORK.contracts.token;
 
 }
 
-export function getTreasuryAddress() {
+function getTreasuryAddress() {
 
     return NETWORK.treasury;
 
 }
 
-export function getAbiPath(name) {
+function getAbiPath(name) {
 
     return NETWORK.abi[name] ?? null;
 
@@ -175,4 +178,6 @@ export function getAbiPath(name) {
 // Export
 // =====================================================
 
-export default NETWORK;
+LF.net_evoz = NETWORK;
+
+})(window.LF, window.ethers);
