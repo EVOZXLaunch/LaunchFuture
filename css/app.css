@@ -33,9 +33,9 @@ body{
         "Plus Jakarta Sans",
         sans-serif;
 
-    background:#050505;
+    background:var(--background);
 
-    color:#ffffff;
+    color:var(--text);
 
     overflow-x:hidden;
 
@@ -89,13 +89,25 @@ ul{
 
     --background:#050505;
 
+    --bg-grad-1:#090909;
+
+    --bg-grad-2:#050505;
+
+    --bg-grad-3:#030303;
+
     --surface:#111214;
 
     --surface-2:#18191d;
 
     --surface-3:#202227;
 
-    --border:rgba(255,255,255,.08);
+    /* RGB channel triplets used inside rgba() so the same
+       declarations can flip between dark/light themes */
+    --tint:255,255,255;
+
+    --surface-rgb:17,18,20;
+
+    --border:rgba(var(--tint),.08);
 
     --border-hover:rgba(212,175,55,.35);
 
@@ -113,6 +125,8 @@ ul{
 
     --white:#ffffff;
 
+    --text:#ffffff;
+
     --muted:#9ca3af;
 
     --radius:22px;
@@ -126,6 +140,82 @@ ul{
     --transition:
 
         .25s ease;
+
+    --theme-transition:
+
+        background-color .3s ease,
+
+        color .3s ease,
+
+        border-color .3s ease;
+
+}
+
+/* =====================================================
+   LIGHT THEME
+   ===================================================== */
+
+html[data-theme="light"]{
+
+    --background:#f3f4f7;
+
+    --bg-grad-1:#eef0f4;
+
+    --bg-grad-2:#f6f7fa;
+
+    --bg-grad-3:#ffffff;
+
+    --surface:#ffffff;
+
+    --surface-2:#f5f6f9;
+
+    --surface-3:#eceef2;
+
+    --tint:15,17,22;
+
+    --surface-rgb:255,255,255;
+
+    --border:rgba(15,17,22,.10);
+
+    --border-hover:rgba(180,140,20,.45);
+
+    --white:#101114;
+
+    --text:#101114;
+
+    --muted:#5b6472;
+
+    --shadow:
+
+        0 18px 46px
+
+        rgba(20,20,30,.10);
+
+}
+
+html[data-theme="light"] #background{
+
+    opacity:.5;
+
+}
+
+html[data-theme="light"] #particles{
+
+    opacity:.10;
+
+}
+
+html[data-theme="light"] #globeContainer{
+
+    opacity:.35;
+
+}
+
+html,
+body,
+#app{
+
+    transition:var(--theme-transition);
 
 }
 
@@ -219,9 +309,9 @@ select{
 
     border:1px solid var(--border);
 
-    background:rgba(255,255,255,.03);
+    background:rgba(var(--tint),.03);
 
-    color:#fff;
+    color:var(--text);
 
     padding:15px 18px;
 
@@ -325,9 +415,9 @@ textarea{
 
     background:
 
-        rgba(255,255,255,.03);
+        rgba(var(--tint),.03);
 
-    color:#fff;
+    color:var(--text);
 
     transition:var(--transition);
 
@@ -351,7 +441,7 @@ textarea{
 
     background:
 
-        rgba(17,18,20,.88);
+        rgba(var(--surface-rgb),.88);
 
     border:
 
@@ -464,9 +554,9 @@ textarea{
         ),
         linear-gradient(
             180deg,
-            #090909 0%,
-            #050505 45%,
-            #030303 100%
+            var(--bg-grad-1) 0%,
+            var(--bg-grad-2) 45%,
+            var(--bg-grad-3) 100%
         );
 
 }
@@ -488,7 +578,7 @@ textarea{
 
         linear-gradient(
 
-            rgba(255,255,255,.025) 1px,
+            rgba(var(--tint),.025) 1px,
 
             transparent 1px
 
@@ -498,7 +588,7 @@ textarea{
 
             90deg,
 
-            rgba(255,255,255,.025) 1px,
+            rgba(var(--tint),.025) 1px,
 
             transparent 1px
 
@@ -564,27 +654,29 @@ textarea{
 
 #globeContainer{
 
-    position:absolute;
+    position:fixed;
 
-    right:-140px;
+    inset:0;
 
-    top:-220px;
+    width:100%;
 
-    width:900px;
+    height:100%;
 
-    height:900px;
+    opacity:1;
 
-    opacity:.32;
+    pointer-events:none;
 
-    filter:
+    z-index:-9;
 
-        drop-shadow(
+}
 
-            0 0 80px
+#globeCanvas{
 
-            rgba(212,175,55,.18)
+    display:block;
 
-        );
+    width:100% !important;
+
+    height:100% !important;
 
 }
 
@@ -695,7 +787,7 @@ textarea{
 
         1px solid
 
-        rgba(255,255,255,.05);
+        rgba(var(--tint),.05);
 
 }
 
@@ -811,11 +903,19 @@ textarea{
 
         1px solid
 
-        rgba(255,255,255,.06);
+        rgba(var(--tint),.14);
 
     background:
 
-        rgba(255,255,255,.03);
+        rgba(var(--tint),.06);
+
+    box-shadow:
+
+        0 2px 10px
+
+        rgba(0,0,0,.25);
+
+    color:var(--text);
 
     transition:
 
@@ -1180,7 +1280,7 @@ textarea{
 
     background:
 
-        rgba(255,255,255,.03);
+        rgba(var(--tint),.03);
 
     border:
 
@@ -1215,7 +1315,7 @@ textarea{
 
     background:
 
-        rgba(255,255,255,.06);
+        rgba(var(--tint),.06);
 
     overflow:hidden;
 
@@ -1324,7 +1424,7 @@ textarea{
 
 .timelineStep.active{
 
-    color:#fff;
+    color:var(--text);
 
 }
 
@@ -1366,7 +1466,7 @@ textarea{
 
     background:
 
-        rgba(17,18,20,.92);
+        rgba(var(--surface-rgb),.92);
 
     border:
 
@@ -1397,7 +1497,7 @@ textarea{
 
         1px solid
 
-        rgba(255,255,255,.05);
+        rgba(var(--tint),.05);
 
 }
 
@@ -1482,7 +1582,7 @@ textarea{
 
         1px solid
 
-        rgba(255,255,255,.05);
+        rgba(var(--tint),.05);
 
 }
 
@@ -1504,7 +1604,7 @@ textarea{
 
     background:
 
-        rgba(17,18,20,.92);
+        rgba(var(--surface-rgb),.92);
 
     border:
 
@@ -1556,7 +1656,7 @@ textarea{
 
     background:
 
-        rgba(255,255,255,.03);
+        rgba(var(--tint),.03);
 
     display:flex;
 
@@ -1568,7 +1668,7 @@ textarea{
 
         1px solid
 
-        rgba(255,255,255,.05);
+        rgba(var(--tint),.05);
 
 }
 
@@ -1638,7 +1738,7 @@ textarea{
 
         1px solid
 
-        rgba(255,255,255,.05);
+        rgba(var(--tint),.05);
 
 }
 
@@ -1659,7 +1759,7 @@ textarea{
 
 .previewRow strong{
 
-    color:#fff;
+    color:var(--text);
 
 }
 
@@ -1700,7 +1800,7 @@ textarea{
 
     background:
 
-        rgba(17,18,20,.90);
+        rgba(var(--surface-rgb),.90);
 
     border:
 
@@ -1878,7 +1978,7 @@ textarea{
 
 .formGroup label{
 
-    color:#fff;
+    color:var(--text);
 
     font-weight:600;
 
@@ -1903,7 +2003,7 @@ textarea{
 
         2px dashed
 
-        rgba(255,255,255,.10);
+        rgba(var(--tint),.10);
 
     border-radius:22px;
 
@@ -1995,9 +2095,9 @@ textarea{
 
     background:
 
-        rgba(255,255,255,.03);
+        rgba(var(--tint),.03);
 
-    color:#fff;
+    color:var(--text);
 
     transition:
 
@@ -2064,7 +2164,7 @@ textarea{
 
     background:
 
-        rgba(255,255,255,.03);
+        rgba(var(--tint),.03);
 
 }
 
@@ -2133,7 +2233,7 @@ textarea{
 
     background:
 
-        rgba(255,255,255,.08);
+        rgba(var(--tint),.08);
 
     overflow:hidden;
 
@@ -2182,7 +2282,7 @@ details{
 
     background:
 
-        rgba(255,255,255,.02);
+        rgba(var(--tint),.02);
 
 }
 
@@ -2194,7 +2294,7 @@ summary{
 
     font-weight:700;
 
-    color:#fff;
+    color:var(--text);
 
 }
 
@@ -2237,7 +2337,7 @@ summary{
 
     background:
 
-        rgba(255,255,255,.03);
+        rgba(var(--tint),.03);
 
     transition:
 
@@ -2323,7 +2423,7 @@ summary{
 
         1px solid
 
-        rgba(255,255,255,.05);
+        rgba(var(--tint),.05);
 
 }
 
@@ -2440,11 +2540,11 @@ summary{
 
         1px solid
 
-        rgba(255,255,255,.06);
+        rgba(var(--tint),.06);
 
     background:
 
-        rgba(255,255,255,.015);
+        rgba(var(--tint),.015);
 
 }
 
@@ -2539,7 +2639,7 @@ summary{
 
         1px solid
 
-        rgba(255,255,255,.05);
+        rgba(var(--tint),.05);
 
     color:
 
@@ -2560,8 +2660,6 @@ summary{
 
     right:24px;
 
-    max-width:calc(100vw - 48px);
-
     display:flex;
 
     flex-direction:column;
@@ -2581,9 +2679,9 @@ summary{
 
     align-items:flex-start;
 
-    width:320px;
+    min-width:320px;
 
-    max-width:100%;
+    max-width:420px;
 
     padding:18px;
 
@@ -2597,7 +2695,7 @@ summary{
 
     background:
 
-        rgba(17,18,20,.95);
+        rgba(var(--surface-rgb),.95);
 
     backdrop-filter:
 
@@ -2631,6 +2729,30 @@ summary{
 .toastContent p{
 
     font-size:.86rem;
+
+}
+
+.toast--success{
+
+    border-color:rgba(34,197,94,.35);
+
+}
+
+.toast--success .toastIcon{
+
+    color:var(--green);
+
+}
+
+.toast--error{
+
+    border-color:rgba(239,68,68,.35);
+
+}
+
+.toast--error .toastIcon{
+
+    color:var(--red);
 
 }
 
@@ -2688,7 +2810,7 @@ summary{
 
     background:
 
-        rgba(17,18,20,.95);
+        rgba(var(--surface-rgb),.95);
 
 }
 
@@ -2707,7 +2829,7 @@ summary{
 
         4px solid
 
-        rgba(255,255,255,.08);
+        rgba(var(--tint),.08);
 
     border-top-color:
 
@@ -2777,7 +2899,7 @@ summary{
 
     background:
 
-        rgba(17,18,20,.96);
+        rgba(var(--surface-rgb),.96);
 
     border:
 
@@ -2806,7 +2928,7 @@ summary{
 
         1px solid
 
-        rgba(255,255,255,.05);
+        rgba(var(--tint),.05);
 
 }
 
@@ -2823,9 +2945,9 @@ summary{
 
     background:
 
-        rgba(255,255,255,.04);
+        rgba(var(--tint),.04);
 
-    color:#fff;
+    color:var(--text);
 
 }
 
@@ -2851,7 +2973,7 @@ summary{
 
         1px solid
 
-        rgba(255,255,255,.05);
+        rgba(var(--tint),.05);
 
 }
 
@@ -2913,7 +3035,7 @@ summary{
 
         1px solid
 
-        rgba(255,255,255,.05);
+        rgba(var(--tint),.05);
 
 }
 
@@ -2930,9 +3052,9 @@ summary{
 
     background:
 
-        rgba(255,255,255,.04);
+        rgba(var(--tint),.04);
 
-    color:#fff;
+    color:var(--text);
 
 }
 
@@ -2951,6 +3073,12 @@ summary{
 [hidden]{
 
     display:none !important;
+
+   }
+
+body.modalOpen{
+
+    overflow:hidden;
 
    }
 
@@ -3191,7 +3319,7 @@ summary{
 
     background:
 
-        rgba(17,18,20,.98);
+        rgba(var(--surface-rgb),.98);
 
     backdrop-filter:
 
@@ -3252,28 +3380,6 @@ summary{
     right:12px;
 
     top:12px;
-
-    max-width:calc(100vw - 24px);
-
-}
-
-.toast{
-
-    width:100%;
-
-}
-
-#globeContainer{
-
-    width:560px;
-
-    height:560px;
-
-    top:-120px;
-
-    right:-200px;
-
-    opacity:.18;
 
 }
 
@@ -3544,24 +3650,4 @@ h3{font-size:1.1rem;}
 .deployStep{gap:12px;}
 .deployIcon{width:42px;height:42px;}
 #deployConsoleOutput{font-size:.75rem;min-height:180px;}
-}
-
-/* =====================================================
-   LIGHT THEME (TOGGLEABLE)
-   ===================================================== */
-
-body.lightTheme{
-    filter:invert(1) hue-rotate(180deg);
-    background:#fff;
-}
-
-body.lightTheme img,
-body.lightTheme svg,
-body.lightTheme video,
-body.lightTheme iframe{
-    filter:invert(1) hue-rotate(180deg);
-}
-
-body.lightTheme #background{
-    opacity:.6;
 }
