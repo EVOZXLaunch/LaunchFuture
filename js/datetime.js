@@ -1,3 +1,6 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // DateTime Manager
@@ -53,13 +56,13 @@ const TIME_OPTIONS = Object.freeze({
 // Current
 // =====================================================
 
-export function getNow() {
+function getNow() {
 
     return new Date();
 
 }
 
-export function getCurrentDate() {
+function getCurrentDate() {
 
     return formatDate(
 
@@ -69,7 +72,7 @@ export function getCurrentDate() {
 
 }
 
-export function getCurrentTime() {
+function getCurrentTime() {
 
     return formatTime(
 
@@ -79,7 +82,7 @@ export function getCurrentTime() {
 
 }
 
-export function getCurrentDateTime() {
+function getCurrentDateTime() {
 
     return (
 
@@ -101,7 +104,7 @@ export function getCurrentDateTime() {
 // Time Zone
 // =====================================================
 
-export function getTimeZone() {
+function getTimeZone() {
 
     return Intl.DateTimeFormat()
 
@@ -115,7 +118,7 @@ export function getTimeZone() {
 // Format
 // =====================================================
 
-export function formatDate(
+function formatDate(
     date
 ) {
 
@@ -129,7 +132,7 @@ export function formatDate(
 
 }
 
-export function formatTime(
+function formatTime(
     date
 ) {
 
@@ -143,7 +146,7 @@ export function formatTime(
 
 }
 
-export function formatDateTime(
+function formatDateTime(
     date
 ) {
 
@@ -167,7 +170,7 @@ export function formatDateTime(
 // Clock
 // =====================================================
 
-export function updateClock() {
+function updateClock() {
 
     if (!clockElement) {
 
@@ -185,7 +188,7 @@ export function updateClock() {
 // Timer
 // =====================================================
 
-export function startClock() {
+function startClock() {
 
     stopClock();
 
@@ -201,7 +204,7 @@ export function startClock() {
 
 }
 
-export function stopClock() {
+function stopClock() {
 
     if (!timer) {
 
@@ -223,8 +226,16 @@ export function stopClock() {
 // Initialize
 // =====================================================
 
-export function initDateTime() {
+function initDateTime() {
 
     startClock();
 
 }
+
+LF.datetime = {
+    getNow, getCurrentDate, getCurrentTime, getCurrentDateTime, getTimeZone,
+    formatDate, formatTime, formatDateTime,
+    updateClock, startClock, stopClock, initDateTime
+};
+
+})(window.LF, window.ethers);

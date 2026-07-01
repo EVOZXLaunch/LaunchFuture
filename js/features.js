@@ -1,3 +1,6 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // Feature Registry
@@ -354,4 +357,6 @@ const FEATURES = [
 
 ];
 
-export default FEATURES;
+LF.features = FEATURES;
+
+})(window.LF, window.ethers);

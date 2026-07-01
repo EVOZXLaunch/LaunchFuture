@@ -1,3 +1,6 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // Wizard Engine
@@ -8,7 +11,7 @@
 // Constants
 // =====================================================
 
-export const TOTAL_STEPS =
+const TOTAL_STEPS =
     
     6;
 
@@ -43,7 +46,7 @@ const wizardData = {
 // Persistence
 // =====================================================
 
-export function saveWizard() {
+function saveWizard() {
 
     localStorage.setItem(
 
@@ -59,7 +62,7 @@ export function saveWizard() {
 
 }
 
-export function loadWizard() {
+function loadWizard() {
 
     const saved =
 
@@ -127,7 +130,7 @@ export function loadWizard() {
 
 }
 
-export function resetWizard() {
+function resetWizard() {
 
     currentStep = 1;
 
@@ -151,19 +154,19 @@ export function resetWizard() {
 // Getters
 // =====================================================
 
-export function getCurrentStep() {
+function getCurrentStep() {
 
     return currentStep;
 
 }
 
-export function getTotalSteps() {
+function getTotalSteps() {
 
     return TOTAL_STEPS;
 
 }
 
-export function getWizardData() {
+function getWizardData() {
 
     return structuredClone(
 
@@ -177,7 +180,7 @@ export function getWizardData() {
 // Navigation
 // =====================================================
 
-export function nextStep() {
+function nextStep() {
 
     if (
 
@@ -195,7 +198,7 @@ export function nextStep() {
 
 }
 
-export function previousStep() {
+function previousStep() {
 
     if (
 
@@ -213,7 +216,7 @@ export function previousStep() {
 
 }
 
-export function goToStep(
+function goToStep(
     step
 ) {
 
@@ -247,7 +250,7 @@ export function goToStep(
 // Progress
 // =====================================================
 
-export function getProgress() {
+function getProgress() {
 
     return Math.round(
 
@@ -263,7 +266,7 @@ export function getProgress() {
 
 }
 
-export function isFirstStep() {
+function isFirstStep() {
 
     return (
 
@@ -275,7 +278,7 @@ export function isFirstStep() {
 
 }
 
-export function isLastStep() {
+function isLastStep() {
 
     return (
 
@@ -291,7 +294,7 @@ export function isLastStep() {
 // Data
 // =====================================================
 
-export function setTokenData(
+function setTokenData(
     data
 ) {
 
@@ -307,7 +310,7 @@ export function setTokenData(
 
 }
 
-export function setFeatureData(
+function setFeatureData(
     data
 ) {
 
@@ -323,7 +326,7 @@ export function setFeatureData(
 
 }
 
-export function setMetadataData(
+function setMetadataData(
     data
 ) {
 
@@ -339,7 +342,7 @@ export function setMetadataData(
 
 }
 
-export function setPaymentData(
+function setPaymentData(
     data
 ) {
 
@@ -359,7 +362,7 @@ export function setPaymentData(
 // Helpers
 // =====================================================
 
-export function hasWizardData() {
+function hasWizardData() {
 
     return (
 
@@ -391,10 +394,21 @@ export function hasWizardData() {
 
 }
 
-export function isWizardEmpty() {
+function isWizardEmpty() {
 
     return !
 
         hasWizardData();
 
 }
+
+LF.wizard = {
+    TOTAL_STEPS, saveWizard, loadWizard, resetWizard,
+    getCurrentStep, getTotalSteps, getWizardData,
+    nextStep, previousStep, goToStep, getProgress,
+    isFirstStep, isLastStep,
+    setTokenData, setFeatureData, setMetadataData, setPaymentData,
+    hasWizardData, isWizardEmpty
+};
+
+})(window.LF, window.ethers);

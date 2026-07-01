@@ -1,33 +1,13 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // Blockchain Engine
 // =====================================================
 
-import {
-    
-    BrowserProvider,
-
-    Contract,
-
-    parseUnits,
-
-    formatUnits,
-
-    formatEther,
-
-    isAddress,
-
-    ZeroAddress,
-
-    MaxUint256
-
-} from "ethers";
-
-import {
-    RPC,
-    SECURITY
-} from "./config.js";
-
+const { BrowserProvider, Contract, parseUnits, formatUnits, formatEther, isAddress, ZeroAddress, MaxUint256 } = ethers;
+const { RPC, SECURITY } = LF.config;
 // =====================================================
 // State
 // =====================================================
@@ -112,7 +92,7 @@ async function withTimeout(
 // Provider
 // =====================================================
 
-export async function getProvider() {
+async function getProvider() {
 
     if (provider)
         return provider;
@@ -138,7 +118,7 @@ export async function getProvider() {
 // Signer
 // =====================================================
 
-export async function getSigner() {
+async function getSigner() {
 
     if (signer)
         return signer;
@@ -161,7 +141,7 @@ export async function getSigner() {
 // Refresh Signer
 // =====================================================
 
-export function clearSession() {
+function clearSession() {
 
     provider = null;
 
@@ -173,7 +153,7 @@ export function clearSession() {
 // Native Balance
 // =====================================================
 
-export async function getNativeBalance(
+async function getNativeBalance(
     address
 ) {
 
@@ -201,7 +181,7 @@ export async function getNativeBalance(
 
 }
 
-export async function getFormattedBalance(
+async function getFormattedBalance(
     address,
     decimals = 4
 ) {
@@ -227,7 +207,7 @@ export async function getFormattedBalance(
 // Contract
 // =====================================================
 
-export async function getContract(
+async function getContract(
     address,
     abi,
     readOnly = false
@@ -274,7 +254,7 @@ export async function getContract(
 // ERC20
 // =====================================================
 
-export async function getERC20Balance(
+async function getERC20Balance(
 
     token,
 
@@ -310,7 +290,7 @@ export async function getERC20Balance(
 
 }
 
-export async function getERC20Allowance(
+async function getERC20Allowance(
 
     token,
 
@@ -354,7 +334,7 @@ export async function getERC20Allowance(
 // Transaction
 // =====================================================
 
-export async function waitTransaction(
+async function waitTransaction(
     tx,
     confirmations = 1
 ) {
@@ -375,33 +355,30 @@ export async function waitTransaction(
 // Unit
 // =====================================================
 
-export {
 
-    parseUnits,
-
-    formatUnits
-
-};
 
 // =====================================================
 // Address
 // =====================================================
 
-export {
 
-    isAddress,
-
-    ZeroAddress,
-
-    MaxUint256
-
-};
 
 // =====================================================
 // Export
 // =====================================================
 
-export default {
+LF.blockchain = {
+
+    parseUnits,
+
+    formatUnits,
+
+    isAddress,
+
+    ZeroAddress,
+
+    MaxUint256,
+
 
     getProvider,
 
@@ -432,3 +409,5 @@ export default {
     MaxUint256
 
 };
+
+})(window.LF, window.ethers);

@@ -1,26 +1,14 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // Factory Manager
 // =====================================================
 
-import {
-
-    getCurrentNetwork
-
-} from "./networks/index.js";
-
-import {
-
-    loadABI
-
-} from "./abi/loader.js";
-
-import {
-
-    getContract
-
-} from "./blockchain.js";
-
+const { getCurrentNetwork } = LF.networks;
+const { loadABI } = LF.abiLoader;
+const { getContract } = LF.blockchain;
 // =====================================================
 // State
 // =====================================================
@@ -35,7 +23,7 @@ let factoryABI = null;
 // Factory Contract (signer-bound — required for txs)
 // =====================================================
 
-export async function getFactory() {
+async function getFactory() {
 
     if (factory) {
 
@@ -70,7 +58,7 @@ export async function getFactory() {
 // so they work even before a wallet is connected.
 // =====================================================
 
-export async function getFactoryReadOnly() {
+async function getFactoryReadOnly() {
 
     if (factoryReadOnly) {
 
@@ -106,7 +94,7 @@ export async function getFactoryReadOnly() {
 // Reset
 // =====================================================
 
-export function clearFactory() {
+function clearFactory() {
 
     factory = null;
 
@@ -120,7 +108,7 @@ export function clearFactory() {
 // Symbol
 // =====================================================
 
-export async function symbolExists(
+async function symbolExists(
     symbol
 ) {
 
@@ -134,7 +122,7 @@ export async function symbolExists(
 
 }
 
-export async function isSymbolAvailable(
+async function isSymbolAvailable(
     symbol
 ) {
 
@@ -152,7 +140,7 @@ export async function isSymbolAvailable(
 // Payment
 // =====================================================
 
-export async function getPaymentMethod(
+async function getPaymentMethod(
     symbol
 ) {
 
@@ -166,7 +154,7 @@ export async function getPaymentMethod(
 
 }
 
-export async function getDeployFee(
+async function getDeployFee(
     paymentSymbol
 ) {
 
@@ -180,7 +168,7 @@ export async function getDeployFee(
 
 }
 
-export async function quoteNativeFee(
+async function quoteNativeFee(
     paymentSymbol
 ) {
 
@@ -198,7 +186,7 @@ export async function quoteNativeFee(
 // Statistics
 // =====================================================
 
-export async function getStatistics() {
+async function getStatistics() {
 
     const contract =
         await getFactoryReadOnly();
@@ -208,7 +196,7 @@ export async function getStatistics() {
 
 }
 
-export async function getFactoryTokenCount() {
+async function getFactoryTokenCount() {
 
     const contract =
         await getFactoryReadOnly();
@@ -222,7 +210,7 @@ export async function getFactoryTokenCount() {
 // Predict
 // =====================================================
 
-export async function predictTokenAddress(
+async function predictTokenAddress(
     config,
     metadata,
     salt
@@ -278,7 +266,7 @@ async function executeTransaction(
 // Deploy
 // =====================================================
 
-export async function deployWithNative(
+async function deployWithNative(
     config,
     metadata,
     value
@@ -310,7 +298,7 @@ export async function deployWithNative(
 
 }
 
-export async function deployWithPermit(
+async function deployWithPermit(
     config,
     metadata,
     paymentSymbol,
@@ -350,7 +338,7 @@ export async function deployWithPermit(
 
 }
 
-export async function deployCreate2(
+async function deployCreate2(
     config,
     metadata,
     paymentSymbol,
@@ -385,7 +373,7 @@ export async function deployCreate2(
 // Export
 // =====================================================
 
-export default {
+LF.factory = {
 
     getFactory,
 
@@ -416,3 +404,5 @@ export default {
     deployCreate2
 
 };
+
+})(window.LF, window.ethers);

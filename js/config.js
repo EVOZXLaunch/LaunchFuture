@@ -1,9 +1,12 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // Launch Future
 // Global Configuration
 // =====================================================
 
-export const APP = Object.freeze({
+const APP = Object.freeze({
 
     name:
         "LaunchFuture",
@@ -29,7 +32,7 @@ export const APP = Object.freeze({
 // Config Version
 // =====================================================
 
-export const CONFIG_VERSION =
+const CONFIG_VERSION =
 
     "1.0.0";
 
@@ -37,7 +40,7 @@ export const CONFIG_VERSION =
 // Cache
 // =====================================================
 
-export const CACHE = Object.freeze({
+const CACHE = Object.freeze({
 
     wallet:
         "lf_wallet",
@@ -60,7 +63,7 @@ export const CACHE = Object.freeze({
 // Feature Flags
 // =====================================================
 
-export const FEATURE_FLAGS = Object.freeze({
+const FEATURE_FLAGS = Object.freeze({
 
     verification:
         true,
@@ -83,7 +86,7 @@ export const FEATURE_FLAGS = Object.freeze({
 // Wallet
 // =====================================================
 
-export const WALLET = Object.freeze({
+const WALLET = Object.freeze({
 
     autoConnect:
         true,
@@ -100,7 +103,7 @@ export const WALLET = Object.freeze({
 // RPC
 // =====================================================
 
-export const RPC = Object.freeze({
+const RPC = Object.freeze({
 
     timeout:
         15000,
@@ -120,7 +123,7 @@ export const RPC = Object.freeze({
 // Deploy
 // =====================================================
 
-export const DEPLOY = Object.freeze({
+const DEPLOY = Object.freeze({
 
     confirmations:
         1,
@@ -134,7 +137,7 @@ export const DEPLOY = Object.freeze({
 // Gas
 // =====================================================
 
-export const GAS = Object.freeze({
+const GAS = Object.freeze({
 
     multiplier:
         1.20,
@@ -154,7 +157,7 @@ export const GAS = Object.freeze({
 // Security
 // =====================================================
 
-export const SECURITY = Object.freeze({
+const SECURITY = Object.freeze({
 
     verifyChain:
         true,
@@ -177,7 +180,7 @@ export const SECURITY = Object.freeze({
 // UI
 // =====================================================
 
-export const UI = Object.freeze({
+const UI = Object.freeze({
 
     animation:
 
@@ -197,7 +200,7 @@ export const UI = Object.freeze({
 // Validation
 // =====================================================
 
-export const LIMITS = Object.freeze({
+const LIMITS = Object.freeze({
 
     minNameLength:
         2,
@@ -223,7 +226,7 @@ export const LIMITS = Object.freeze({
 // Export
 // =====================================================
 
-export default {
+LF.config = {
 
     APP,
 
@@ -248,3 +251,5 @@ export default {
     LIMITS
 
 };
+
+})(window.LF, window.ethers);

@@ -1,3 +1,6 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // Payment Method Manager
@@ -5,10 +8,9 @@
 // and handles native (EVOZ) + ERC-20 permit (LFT) flows
 // =====================================================
 
-import { getFactory, getDeployFee, getPaymentMethod } from "./factory.js";
-import { getCurrentNetwork } from "./networks/index.js";
-import { formatUnits, parseUnits } from "ethers";
-
+const { getFactory, getDeployFee, getPaymentMethod } = LF.factory;
+const { getCurrentNetwork } = LF.networks;
+const { formatUnits, parseUnits } = ethers;
 // =====================================================
 // Known payment symbols to try loading
 // Add more as you register them in the factory
@@ -27,7 +29,7 @@ let selectedSymbol  = null;
 // Load
 // =====================================================
 
-export async function loadPaymentMethods() {
+async function loadPaymentMethods() {
     const network = getCurrentNetwork();
     const symbols = network.paymentSymbols ?? CANDIDATE_SYMBOLS;
     loadedMethods = [];
@@ -59,16 +61,16 @@ export async function loadPaymentMethods() {
 // Selection
 // =====================================================
 
-export function selectPayment(symbol) {
+function selectPayment(symbol) {
     selectedSymbol = symbol;
 }
 
-export function getSelectedPayment() {
+function getSelectedPayment() {
     if (!selectedSymbol) return null;
     return loadedMethods.find(m => m.symbol === selectedSymbol) ?? null;
 }
 
-export function getLoadedMethods() {
+function getLoadedMethods() {
     return loadedMethods;
 }
 
@@ -76,7 +78,7 @@ export function getLoadedMethods() {
 // Render Cards
 // =====================================================
 
-export function renderPaymentCards(containerId, onSelect) {
+function renderPaymentCards(containerId, onSelect) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
@@ -146,7 +148,7 @@ export function renderPaymentCards(containerId, onSelect) {
 // EIP-712 Permit for ERC-20 payment (LFT)
 // =====================================================
 
-export async function signPermit(signer, tokenContract, spender, value, deadline) {
+async function signPermit(signer, tokenContract, spender, value, deadline) {
     const owner      = await signer.getAddress();
     const nonce      = await tokenContract.nonces(owner);
     const domain     = {
@@ -172,7 +174,7 @@ export async function signPermit(signer, tokenContract, spender, value, deadline
     return { v, r, s, deadline };
 }
 
-export default {
+LF.payment = {
     loadPaymentMethods,
     renderPaymentCards,
     selectPayment,
@@ -180,3 +182,5 @@ export default {
     getLoadedMethods,
     signPermit
 };
+
+})(window.LF, window.ethers);

@@ -1,27 +1,14 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // Wallet Manager
 // Part 1
 // =====================================================
 
-import {
-    
-    getProvider,
-
-    getSigner as blockchainGetSigner,
-
-    clearSession,
-
-    getNativeBalance
-
-} from "./blockchain.js";
-
-import {
-
-    CACHE
-
-} from "./config.js";
-
+const { getProvider, getSigner: blockchainGetSigner, clearSession, getNativeBalance } = LF.blockchain;
+const { CACHE } = LF.config;
 // =====================================================
 // Storage
 // =====================================================
@@ -224,7 +211,7 @@ async function refreshWalletState() {
 // Connect
 // =====================================================
 
-export async function connectWallet() {
+async function connectWallet() {
 
     if (!window.ethereum) {
 
@@ -320,7 +307,7 @@ function detectWallet() {
 // Disconnect
 // =====================================================
 
-export function disconnectWallet() {
+function disconnectWallet() {
 
     resetWalletState();
 
@@ -334,7 +321,7 @@ export function disconnectWallet() {
 // Restore Connection
 // =====================================================
 
-export async function restoreConnection() {
+async function restoreConnection() {
 
     const saved =
 
@@ -364,7 +351,7 @@ export async function restoreConnection() {
 // Switch Network
 // =====================================================
 
-export async function switchNetwork(
+async function switchNetwork(
     chainId
 ) {
 
@@ -396,7 +383,7 @@ export async function switchNetwork(
 // Wallet Events
 // =====================================================
 
-export function registerWalletEvents(
+function registerWalletEvents(
     callbacks = {}
 ) {
 
@@ -505,37 +492,37 @@ export function registerWalletEvents(
 // Getters
 // =====================================================
 
-export function isConnected() {
+function isConnected() {
 
     return connected;
 
 }
 
-export function getAccount() {
+function getAccount() {
 
     return account;
 
 }
 
-export function getChainId() {
+function getChainId() {
 
     return chainId;
 
 }
 
-export function getWalletName() {
+function getWalletName() {
 
     return walletName;
 
 }
 
-export function getNetwork() {
+function getNetwork() {
 
     return network;
 
 }
 
-export function getConnectedAt() {
+function getConnectedAt() {
 
     return connectedAt;
 
@@ -545,7 +532,7 @@ export function getConnectedAt() {
 // Balance
 // =====================================================
 
-export async function getBalance() {
+async function getBalance() {
 
     if (!connected) {
 
@@ -563,7 +550,7 @@ export async function getBalance() {
 // Wallet Info
 // =====================================================
 
-export function getWallet() {
+function getWallet() {
 
     return {
 
@@ -583,25 +570,25 @@ export function getWallet() {
 
 }
 
-export async function getWalletProvider() {
+async function getWalletProvider() {
 
     return await getProvider();
 
 }
 
-export async function getWalletSigner() {
+async function getWalletSigner() {
 
     return await blockchainGetSigner();
 
 }
 
-export async function getSigner() {
+async function getSigner() {
 
     return await blockchainGetSigner();
 
 }
 
-export default {
+LF.wallet = {
 
     connectWallet,
 
@@ -636,3 +623,5 @@ export default {
     getSigner
 
 };
+
+})(window.LF, window.ethers);

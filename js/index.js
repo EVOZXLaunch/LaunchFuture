@@ -1,107 +1,21 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // ===================================================== 
 // LaunchFuture Main Controller Part 1 
 // Foundation 
 // =====================================================
 
-import {
-
-    initUI,
-
-    nextStep,
-
-    previousStep,
-
-    goToStep,
-
-    getCurrentStep,
-
-    setWalletConnected,
-
-    setWalletDisconnected,
-
-    initTheme,
-
-    toggleTheme,
-
-    bindModal,
-
-    openModal,
-
-    closeModal,
-
-    showToast
-
-} from "./ui.js";
-
-import {
-
-    restoreConnection,
-
-    connectWallet,
-
-    disconnectWallet,
-
-    isConnected,
-
-    getAccount,
-
-    getWalletName,
-
-    getNetwork
-
-} from "./wallet.js";
-
-import {
-
-    getFormattedBalance
-
-} from "./blockchain.js";
-
-import {
-
-    initDateTime
-
-} from "./datetime.js";
-
-import {
-
-    getWizardData,
-
-    loadWizard,
-
-    saveWizard,
-
-    setTokenData,
-
-    setMetadataData,
-
-    setFeatureData
-
-} from "./wizard.js";
-
-import {
-
-    buildTokenConfig,
-
-    buildMetadata,
-
-    deployToken,
-
-    buildVerifyPackage
-
-} from "./deploy.js";
-
-import {
-
-    isSymbolAvailable
-
-} from "./factory.js";
-
-import FEATURES from "./features.js";
-import { loadPaymentMethods, renderPaymentCards, getSelectedPayment, getLoadedMethods } from "./payment.js";
-import { formatUnits } from "ethers";
-
-
+const { initUI, nextStep, previousStep, goToStep, getCurrentStep, setWalletConnected, setWalletDisconnected, initTheme, toggleTheme, bindModal, openModal, closeModal, showToast } = LF.ui;
+const { restoreConnection, connectWallet, disconnectWallet, isConnected, getAccount, getWalletName, getNetwork } = LF.wallet;
+const { getFormattedBalance } = LF.blockchain;
+const { initDateTime } = LF.datetime;
+const { getWizardData, loadWizard, saveWizard, setTokenData, setMetadataData, setFeatureData } = LF.wizard;
+const { buildTokenConfig, buildMetadata, deployToken, buildVerifyPackage } = LF.deploy;
+const { isSymbolAvailable } = LF.factory;
+const FEATURES = LF.features;
+const { loadPaymentMethods, renderPaymentCards, getSelectedPayment, getLoadedMethods } = LF.payment;
+const { formatUnits } = ethers;
 // =====================================================
 // DOM HELPERS
 // =====================================================
@@ -408,9 +322,13 @@ async function initialize(){
 
     catch(error){
 
-        console.error(error);
+        console.error("App initialization failed:", error);
 
-alert(error.stack);
+showToast({
+    title: "Something went wrong",
+    message: "The app failed to start properly. Please refresh the page. If the problem persists, contact support.",
+    variant: "error"
+});
 
     }
 
@@ -787,3 +705,5 @@ async function openFeeCalculator() {
     }
 }
 
+
+})(window.LF, window.ethers);

@@ -1,20 +1,13 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // Validation Manager
 // =====================================================
 
-import {
-
-    LIMITS
-
-} from "./config.js";
-
-import {
-
-    isAddress
-
-} from "./blockchain.js";
-
+const { LIMITS } = LF.config;
+const { isAddress } = LF.blockchain;
 // =====================================================
 // Helpers
 // =====================================================
@@ -50,7 +43,7 @@ function failure(
 // Token Validation
 // =====================================================
 
-export async function validateTokenConfig(
+async function validateTokenConfig(
     config
 ) {
 
@@ -318,8 +311,10 @@ export async function validateTokenConfig(
 
 }
 
-export default {
+LF.validation = {
 
     validateTokenConfig
 
 };
+
+})(window.LF, window.ethers);

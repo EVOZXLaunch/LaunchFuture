@@ -1,3 +1,6 @@
+window.LF = window.LF || {};
+(function(LF, ethers) {
+"use strict";
 // =====================================================
 // LaunchFuture
 // UI Manager
@@ -7,9 +10,9 @@
 // Constants
 // =====================================================
 
-export const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 6;
 
-export const STEP_DATA = Object.freeze([
+const STEP_DATA = Object.freeze([
 
     {
 
@@ -229,7 +232,7 @@ const ui = {
 // Initialize
 // =====================================================
 
-export function initUI() {
+function initUI() {
 
     // Wizard
 
@@ -441,13 +444,13 @@ export function initUI() {
 // Getters
 // =====================================================
 
-export function getCurrentStep() {
+function getCurrentStep() {
 
     return state.currentStep;
 
 }
 
-export function getStepData(
+function getStepData(
 
     step
 
@@ -465,7 +468,7 @@ export function getStepData(
 // Wizard Engine
 // =====================================================
 
-export function showStep(
+function showStep(
 
     step
 
@@ -491,7 +494,7 @@ export function showStep(
 
 }
 
-export function nextStep() {
+function nextStep() {
 
     if (
 
@@ -511,7 +514,7 @@ export function nextStep() {
 
 }
 
-export function previousStep() {
+function previousStep() {
 
     if (
 
@@ -529,7 +532,7 @@ export function previousStep() {
 
 }
 
-export function goToStep(
+function goToStep(
 
     step
 
@@ -547,7 +550,7 @@ export function goToStep(
 // Refresh Wizard
 // =====================================================
 
-export function refreshWizard() {
+function refreshWizard() {
 
     refreshPages();
 
@@ -801,7 +804,7 @@ function refreshNavigation() {
 // Timeline Click
 // =====================================================
 
-export function bindTimeline() {
+function bindTimeline() {
 
     ui.timelineSteps.forEach(
 
@@ -837,7 +840,7 @@ export function bindTimeline() {
 // Wallet
 // =====================================================
 
-export function shortenAddress(
+function shortenAddress(
 
     address
 
@@ -879,7 +882,7 @@ export function shortenAddress(
 
 }
 
-export function setWalletDisconnected() {
+function setWalletDisconnected() {
 
     if (
 
@@ -927,7 +930,7 @@ export function setWalletDisconnected() {
 
 }
 
-export function setWalletConnected({
+function setWalletConnected({
 
     address,
 
@@ -999,7 +1002,7 @@ export function setWalletConnected({
 // Preview
 // =====================================================
 
-export function updatePreview(
+function updatePreview(
 
     data = {}
 
@@ -1068,7 +1071,7 @@ export function updatePreview(
 // Review
 // =====================================================
 
-export function updateReview(
+function updateReview(
 
     data = {}
 
@@ -1104,7 +1107,7 @@ export function updateReview(
 // Deploy Result
 // =====================================================
 
-export function updateDeployResult(
+function updateDeployResult(
 
     result = {}
 
@@ -1128,7 +1131,7 @@ export function updateDeployResult(
 // Deploy Console
 // =====================================================
 
-export function appendConsole(
+function appendConsole(
 
     message
 
@@ -1158,7 +1161,7 @@ export function appendConsole(
 // Modal
 // =====================================================
 
-export function openModal({
+function openModal({
 
     title = "LaunchFuture",
 
@@ -1208,7 +1211,7 @@ export function openModal({
     }
 }
 
-export function closeModal() {
+function closeModal() {
 
     if (ui.modal) {
         ui.modal.hidden = true;
@@ -1218,7 +1221,7 @@ export function closeModal() {
     state.modalOpen = false;
 }
 
-export function bindModal() {
+function bindModal() {
 
     ui.modalClose?.addEventListener("click", closeModal);
     ui.modalCancel?.addEventListener("click", closeModal);
@@ -1235,7 +1238,7 @@ export function bindModal() {
 // Toast
 // =====================================================
 
-export function showToast({
+function showToast({
 
     title = "",
 
@@ -1281,7 +1284,7 @@ export function showToast({
 
 const THEME_KEY = "launchfuture.theme";
 
-export function getTheme() {
+function getTheme() {
 
     return document.documentElement.getAttribute("data-theme") === "light"
         ? "light"
@@ -1304,7 +1307,7 @@ function applyThemeIcon(theme) {
     }
 }
 
-export function setTheme(theme) {
+function setTheme(theme) {
 
     const resolved = theme === "light" ? "light" : "dark";
 
@@ -1322,12 +1325,12 @@ export function setTheme(theme) {
     applyThemeIcon(resolved);
 }
 
-export function toggleTheme() {
+function toggleTheme() {
 
     setTheme(getTheme() === "light" ? "dark" : "light");
 }
 
-export function initTheme() {
+function initTheme() {
 
     const saved = localStorage.getItem(THEME_KEY);
 
@@ -1342,3 +1345,15 @@ export function initTheme() {
 
     setTheme(prefersLight ? "light" : "dark");
 }
+
+LF.ui = {
+    TOTAL_STEPS, STEP_DATA, initUI,
+    getCurrentStep, getStepData, showStep, nextStep, previousStep, goToStep,
+    refreshWizard, bindTimeline, shortenAddress,
+    setWalletDisconnected, setWalletConnected,
+    updatePreview, updateReview, updateDeployResult, appendConsole,
+    openModal, closeModal, bindModal, showToast,
+    getTheme, setTheme, toggleTheme, initTheme
+};
+
+})(window.LF, window.ethers);
